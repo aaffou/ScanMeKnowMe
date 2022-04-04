@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import ValidationView from '../views/ValidationView.vue'
 import ProductView from '../views/ProductView.vue'
 
 Vue.use(VueRouter)
@@ -14,6 +15,10 @@ const routes = [
     path: '/product',
     name: 'product',
     component: ProductView
+  }, {
+    path: '/validation',
+    name: 'validation',
+    component: ValidationView
   }
 ]
 

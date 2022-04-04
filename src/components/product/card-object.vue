@@ -1,13 +1,15 @@
 <template>
     <div class="card-obj">
-      <div class="img-obj"></div>
-      <h3 class="title-obj">Cookeo Touch</h3>
+      <img src="../../assets/images/cookeo.png" class="img-obj">
+      <div class="title-ref">
+        <h3 class="title-obj">Cookeo Touch</h3>
+        <p class="ref">ref: CE700100</p>
+      </div>
     </div>
 </template>
 
 <script>
 export default {
-
 }
 </script>
 
@@ -16,25 +18,39 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 30vh;
+    height: 26vh;
     width: 90vw;
-    border-radius: 24px;
+    border-radius: 44px;
     z-index: 1;
-    background-color: blue;
+    background-color: white;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.253);
     position: absolute;
     top: 20vh;
     left: 0;
     right: 0;
     margin: 0 auto;
     .img-obj {
-      height: 20vh;
-      width: 20vh;
+      height: 22vh;
       border-radius: 12px;
-      background-color: rgb(255, 234, 0);
       transform: translateY(-40%);
     }
-    .title-obj {
-
-    }
+    .title-ref {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transform: translateY(-90%);
+      .title-obj {
+        margin: 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: rgb(0, 0, 0);
+      text-align: center;
+      }
+      .ref {
+        margin: 0;
+      }
+      }
   }
 </style>
