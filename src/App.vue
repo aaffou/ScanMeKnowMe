@@ -1,9 +1,9 @@
 <template>
   <main>
+    <navbar></navbar>
     <banner></banner>
     <cardObject></cardObject>
     <cardsAction></cardsAction>
-    <navbar></navbar>
   </main>
 </template>
 
