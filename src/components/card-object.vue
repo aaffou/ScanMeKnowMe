@@ -30,7 +30,8 @@ export default {
       height: 20vh;
       width: 20vh;
       border-radius: 12px;
-      background-color: red;
+      background-color: rgb(255, 234, 0);
+      transform: translateY(-40%);
     }
     .title-obj {
 
