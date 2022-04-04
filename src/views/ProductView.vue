@@ -45,8 +45,8 @@ export default {
       margin: 0 auto;
       display: flex;
       justify-content: center;
-        img {
-          width: 150px;
+      img {
+         width: 150px;
       }
     }
     .banner {
