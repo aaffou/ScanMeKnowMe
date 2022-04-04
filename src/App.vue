@@ -1,28 +1,31 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <main>
+    <banner></banner>
+    <cardObject></cardObject>
+    <cardsAction></cardsAction>
+    <navbar></navbar>
+  </main>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import navbar from './components/navbar.vue'
+import banner from './components/banner.vue'
+import cardObject from './components/card-object.vue'
+import cardsAction from './components/cards-action.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    navbar, banner, cardObject, cardsAction
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+  body {
+    margin: 0;
+    main {
+      height: 100vh;
+      width: 100vw;
+    }
+  }
 </style>
