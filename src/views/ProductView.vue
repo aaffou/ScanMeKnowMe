@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import navbar from '../components/navbar.vue'
-import banner from '../components/banner.vue'
-import cardObject from '../components/card-object.vue'
-import cardsAction from '../components/cards-action.vue'
+import navbar from '../components/product/navbar.vue'
+import banner from '../components/product/banner.vue'
+import cardObject from '../components/product/card-object.vue'
+import cardsAction from '../components/product/cards-action.vue'
 export default {
   name: 'product',
   components: {
