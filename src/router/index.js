@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import ValidationView from '../views/ValidationView.vue'
 import ProductView from '../views/ProductView.vue'
 import AccessoiresView from '../views/AccessoiresView.vue'
+import PieceView from '../views/PieceView.vue'
 import RepairView from '../views/RepairView.vue'
 import DiscoverView from '../views/DiscoverView.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -37,13 +38,17 @@ const routes = [
     name: 'accessoires',
     component: AccessoiresView
   }, {
-    path: '/repair',
-    name: 'repair',
-    component: RepairView
+    path: '/piece',
+    name: 'piece',
+    component: PieceView
   }, {
     path: '/discover',
     name: 'discover',
     component: DiscoverView
+  }, {
+    path: '/repair',
+    name: 'repair',
+    component: RepairView
   }
 ]
 

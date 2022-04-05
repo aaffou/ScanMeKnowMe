@@ -65,7 +65,7 @@
 import navbar from '../components/product/navbar.vue'
 
 export default {
-  name: 'repair',
+  name: 'accessoires',
   components: {
     navbar
   }
