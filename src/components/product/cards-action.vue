@@ -14,7 +14,7 @@
         <h3 class="title-action">Je répare</h3>
       </router-link>
 
-      <router-link to="/piece" class="card-action">
+      <router-link to="/accessoire" class="card-action">
         <div class="image-div">
           <img src="../../assets/images/plat-icon.svg" alt="" class="img-action">
         </div>

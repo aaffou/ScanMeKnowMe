@@ -6,9 +6,11 @@
     <div class="chat">
       <img src="../assets/images/chat.svg">
     </div>
+
     <div class="add-product" @click="goHome">
       <img src="../assets/images/plus.svg">
-    </div>
+    </router-link>
+    
     <navbar></navbar>
     <cardObject></cardObject>
     <div class="banner">
