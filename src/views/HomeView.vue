@@ -154,19 +154,29 @@ export default {
 #file-img{
     display: none;
 }
+
 .web-camera-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100VH;
   width: 100VW;
+    .camera-container::before{
+      position: absolute;
+      content: "";
+      width: 100%;
+      background-color: grey;
+      height: 100%;
+      opacity: 0.3;
+       background: radial-gradient(circle at center, transparent 75%, grey 25.5%);
+      background-size: 100% 100%;
+      background-position: 50% 50%;
+    }
     .camera-container{
         height: calc(100% - 44px);
+        position:relative;
 
         .camera-download{
-            display: flex;
-            justify-content: space-around;
-           position: absolute;
             top: 90%;
             left: calc(50% - 60px);
             width: 60;
@@ -185,6 +195,16 @@ export default {
             align-items: center;
             text-align: center;
             color: #FFFEFE;
+             position: absolute;
+
+            a{
+              width:100%;
+              text-decoration: none;
+              color: unset;
+              display: flex;
+              justify-content: space-around;
+            }
+
         }
     }
     .camera-button {
@@ -192,6 +212,7 @@ export default {
         color: #EC676D;
         display: flex;
         justify-content: space-around;
+        align-items: center;
         width: 100%;
         height:44px;
     }
