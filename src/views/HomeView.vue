@@ -1,7 +1,14 @@
 <template>
     <section id="app" class="web-camera-container">
-
-        <main class="camera-container">
+      <lottie-vue-player
+        v-if="showPlayer"
+      :src="`https://assets4.lottiefiles.com/private_files/lf30_efsl46fs.json`"
+                           background="transparent"
+                            speed="1"
+                            style="width: 100%; height: 100%;"
+                            loop controls autoplay>
+        </lottie-vue-player>
+        <main v-if="!showPlayer" class="camera-container">
             <div v-if="isCameraOpen && isLoading" class="camera-loading">
                 <ul class="loader-circle">
                 <li></li>
@@ -26,7 +33,7 @@
                 </router-link>
             </div>
         </main>
-        <footer class="camera-button">
+        <footer v-if="!showPlayer" class="camera-button">
                 <font-awesome-icon @click="takePhoto()" v-if="!isPhotoTaken" icon="fa-solid fa-camera" size="2xl" />
                 <font-awesome-icon @click="isPhotoTaken = false"  v-else icon="fa-solid fa-camera-rotate" size="2xl"/>
             <span class="input-file">
@@ -47,25 +54,29 @@ export default {
       isShotPhoto: false,
       isLoading: false,
       link: '#',
-      photo: null
+      photo: null,
+      showPlayer: true
     }
   },
   mounted () {
     const that = this
     let deviceId = null
-    navigator.mediaDevices.enumerateDevices()
-      .then(function (devices) {
-        devices.forEach(function (device) {
-          if (device.kind.includes('video') && device.label.includes('back') && device.label.includes('2 0')) {
-            deviceId = device.deviceId
-          }
+    setTimeout(() => {
+      that.showPlayer = false
+      navigator.mediaDevices.enumerateDevices()
+        .then(function (devices) {
+          devices.forEach(function (device) {
+            if (device.kind.includes('video') && device.label.includes('back') && device.label.includes('2 0')) {
+              deviceId = device.deviceId
+            }
+          })
+          that.isCameraOpen = true
+          that.createCameraElement(deviceId)
         })
-        that.isCameraOpen = true
-        that.createCameraElement(deviceId)
-      })
-      .catch(function (err) {
-        console.log(err.name + ': ' + err.message)
-      })
+        .catch(function (err) {
+          console.log(err.name + ': ' + err.message)
+        })
+    }, 1500)
   },
   methods: {
     uploadFile () {
