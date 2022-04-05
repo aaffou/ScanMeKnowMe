@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import ValidationView from '../views/ValidationView.vue'
 import ProductView from '../views/ProductView.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -24,6 +25,10 @@ const routes = [
     path: '/product',
     name: 'product',
     component: ProductView
+  }, {
+    path: '/validation',
+    name: 'validation',
+    component: ValidationView
   }
 ]
 
