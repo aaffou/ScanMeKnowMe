@@ -20,8 +20,10 @@
             </div>
 
             <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
-                <span>Valider</span>
-                <font-awesome-icon icon="fa-solid fa-arrow-right-long" />
+                <router-link to="/validation" >
+                    <span>Valider</span>
+                    <font-awesome-icon icon="fa-solid fa-arrow-right-long" />
+                </router-link>
             </div>
         </main>
         <footer class="camera-button">
