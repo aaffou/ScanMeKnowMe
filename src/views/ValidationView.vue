@@ -26,10 +26,12 @@ export default {
     }
   },
   beforeMount () {
-    if (this.$route.query.confidence) {
-      this.confidence = '(' + Math.ceil(this.$route.query.confidence) + '%)'
-    } else if (this.$route.query.nfc) {
-      this.confidence = '(NFC)'
+    if (this.$route.query) {
+      if (this.$route.query.confidence) {
+        this.confidence = '(' + Math.ceil(this.$route.query.confidence) + '%)'
+      } else if (this.$route.query.nfc) {
+        this.confidence = '(NFC)'
+      }
     }
   }
 }
