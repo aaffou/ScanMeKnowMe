@@ -28,7 +28,7 @@ export default {
     h3 {
       color: white;
       letter-spacing: .5px;
-      font-size: 1.3em;
+      font-size: 1.2rem;
       margin: 0 12px;
       font-weight: 400;
     }
