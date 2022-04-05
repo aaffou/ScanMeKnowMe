@@ -3,6 +3,9 @@
     <div class="moulinex">
       <img src="../assets/images/moulinex.svg">
     </div>
+    <div class="add-product">
+      <img src="../assets/images/plus.svg">
+    </div>
     <navbar></navbar>
     <cardObject></cardObject>
     <div class="banner">
@@ -47,6 +50,16 @@ export default {
       justify-content: center;
       img {
          width: 150px;
+      }
+    }
+    .add-product {
+      position: absolute;
+      top: 5.3vh;
+      right: 5vw;
+      display: flex;
+      justify-content: center;
+      img {
+         width: 28px;
       }
     }
     .banner {
