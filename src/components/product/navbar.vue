@@ -1,12 +1,12 @@
 <template>
   <div class="navbar">
     <div class="navbar-item">
-      <img src="https://www.cookeo.com/img/icon-user.svg">
-      <p>label</p>
+      <img src="../../assets/images/live.svg">
+      <p>Live</p>
     </div>
     <div class="navbar-item">
-      <img src="">
-      <p>label</p>
+      <img src="../../assets/images/search.svg">
+      <p>Recherche</p>
     </div>
     <div id="main-item">
       <div class="red">
@@ -14,12 +14,12 @@
       </div>
     </div>
     <div class="navbar-item">
-      <img src="https://www.cookeo.com/img/icon-user.svg">
-      <p>label</p>
+      <img src="../../assets/images/panier.svg">
+      <p>panier</p>
     </div>
     <div class="navbar-item">
-      <img src="https://www.cookeo.com/img/icon-user.svg">
-      <p>label</p>
+      <img src="../../assets/images/profile.svg">
+      <p>Mon profile</p>
     </div>
   </div>
 </template>
@@ -68,17 +68,21 @@ export default {
     }
     .navbar-item {
       height: 100%;
-      width: 12vw;
+      width: 20vw;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      gap: 3px;
       img {
-        height: 4vh;
-        width: 4vh;
+        height: 3vh;
+        width: 3vh;
       }
       p {
         margin: 0;
+        font-weight: 100;
+        font-size: 0.9rem;
+        color: rgb(184, 184, 184);
       }
     }
   }

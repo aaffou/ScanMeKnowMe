@@ -27,15 +27,16 @@ export default {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.253);
     h3 {
       color: white;
+      letter-spacing: .5px;
       font-size: 1.3em;
-      font-weight: bold;
-      margin: 0;
-      margin-left: 12px;
+      margin: 0 12px;
+      font-weight: 400;
     }
     p {
-      margin: 0;
-      margin-left: 12px;
+      font-weight: 100;
+      margin: 0 12px;
       color: white;
+      font-size: 0.9rem;
     }
   }
 </style>
