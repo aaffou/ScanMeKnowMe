@@ -54,6 +54,6 @@ export default {
       .ref {
         margin: 0;
       }
-      }
+    }
   }
 </style>
