@@ -4,21 +4,21 @@
         <div class="image-div">
           <img src="../../assets/images/cookeo-icon.svg" alt="" class="img-action">
         </div>
-        <h3 class="title-action">Découvrir mon Cookeo</h3>
+        <h3 class="title-action">Je découvre <br>mon Cookeo</h3>
       </router-link>
 
       <router-link to="/repair" class="card-action">
         <div class="image-div">
           <img src="../../assets/images/frame.svg" alt="" class="img-action">
         </div>
-        <h3 class="title-action">Réparabilité & Pièces</h3>
+        <h3 class="title-action">Je répare</h3>
       </router-link>
 
       <router-link to="/accessoires" class="card-action">
         <div class="image-div">
           <img src="../../assets/images/plat-icon.svg" alt="" class="img-action">
         </div>
-        <h3 class="title-action">Accessoires & Ustensile</h3>
+        <h3 class="title-action">J'équipe mon Cookeo</h3>
       </router-link>
 
     </div>
