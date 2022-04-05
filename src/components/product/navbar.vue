@@ -8,11 +8,11 @@
       <img src="../../assets/images/search.svg">
       <p>Recherche</p>
     </div>
-    <div id="main-item">
+    <router-link to="/product" id="main-item">
       <div class="red">
         <img src="../../assets/images/m-icon.svg" class="logo-moulinex">
       </div>
-    </div>
+    </router-link>
     <div class="navbar-item">
       <img src="../../assets/images/panier.svg">
       <p>Mon panier</p>

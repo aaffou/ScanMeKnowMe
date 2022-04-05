@@ -3,10 +3,10 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ValidationView from '../views/ValidationView.vue'
 import ProductView from '../views/ProductView.vue'
-import AccessoiresView from '../views/AccessoiresView.vue'
 import PieceView from '../views/PieceView.vue'
 import RepairView from '../views/RepairView.vue'
 import DiscoverView from '../views/DiscoverView.vue'
+import AccessoiresView from '../views/AccessoiresView.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -34,10 +34,6 @@ const routes = [
     name: 'validation',
     component: ValidationView
   }, {
-    path: '/accessoires',
-    name: 'accessoires',
-    component: AccessoiresView
-  }, {
     path: '/piece',
     name: 'piece',
     component: PieceView
@@ -49,6 +45,10 @@ const routes = [
     path: '/repair',
     name: 'repair',
     component: RepairView
+  }, {
+    path: '/accessoire',
+    name: 'accessoire',
+    component: AccessoiresView
   }
 ]
 

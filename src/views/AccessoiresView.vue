@@ -1,5 +1,8 @@
 <template>
   <main>
+    <topbar :topbar="{ title: 'Accessoires',
+                       route: 'product' }">
+    </topbar>
     <navbar></navbar>
     <div class="container">
       <div class="cards-accessoire">
@@ -61,13 +64,12 @@
 </template>
 
 <script>
-
 import navbar from '../components/product/navbar.vue'
-
+import topbar from '../components/topbar.vue'
 export default {
-  name: 'accessoires',
+  name: 'repair',
   components: {
-    navbar
+    navbar, topbar
   }
 }
 </script>
