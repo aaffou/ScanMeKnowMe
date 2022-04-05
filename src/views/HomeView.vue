@@ -1,17 +1,17 @@
 <template>
     <section id="app" class="web-camera-container">
+      {{resultAWS}}
       <lottie-vue-player
         v-if="showPlayer"
       :src="`https://assets4.lottiefiles.com/private_files/lf30_efsl46fs.json`"
                            background="transparent"
-                            speed="1"
                             style="width: 100%; height: 100%;"
                             loop controls autoplay>
         </lottie-vue-player>
         <lottie-vue-player
          v-if="showLoader"
         src="https://assets9.lottiefiles.com/private_files/lf30_xxistptg.json"
-        background="transparent" speed="1"  style="width: 100%; height: 80%;" loop controls autoplay>
+        background="transparent"  style="width: 100%; height: 80%;" loop controls autoplay>
         </lottie-vue-player>
         <main v-if="!showPlayer && !showLoader" class="camera-container">
             <div v-if="isCameraOpen && isLoading" class="camera-loading">
@@ -23,8 +23,6 @@
             </div>
 
             <div v-if="isCameraOpen" v-show="!isLoading" class="camera-box" :class="{ 'flash' : isShotPhoto }">
-
-                <!-- <div class="camera-shutter" :class="{'flash' : isShotPhoto}"></div> -->
 
                 <video v-show="!isPhotoTaken" ref="camera" autoplay></video>
 
@@ -49,6 +47,7 @@
     </section>
 </template>
 <script>
+import AWS from 'aws-sdk'
 export default {
   data () {
     return {
@@ -59,12 +58,16 @@ export default {
       link: '#',
       photo: null,
       showPlayer: true,
-      showLoader: false
+      showLoader: false,
+      s3: null,
+      reko: null,
+      resultAWS: null
     }
   },
   mounted () {
     const that = this
     let deviceId = null
+    that.configureAWS()
     setTimeout(() => {
       that.showPlayer = false
       navigator.mediaDevices.enumerateDevices()
@@ -83,12 +86,58 @@ export default {
     }, 1500)
   },
   methods: {
+    configureAWS () {
+      const albumBucketName = 'custom-labels-console-eu-west-1-5df4f97068'
+      const bucketRegion = 'eu-west-1'
+      // const IdentityPoolId = 'eu-west-1:dc2af845-1b03-48d1-87be-0f270e0c9121'
+      // const IdentityPoolId = 'eu-west-1:e307db58-f1f7-41e5-9e15-a8ef7f24cd38'
+      const credentials = {
+        accessKeyId: 'AKIA3AWUNJUTWRIFJ46C',
+        secretAccessKey: '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',
+        region: bucketRegion
+      }
+      AWS.config.update(credentials)
+
+      this.s3 = new AWS.S3({
+        apiVersion: '2006-03-01',
+        params: { Bucket: albumBucketName }
+      })
+      this.reko = new AWS.Rekognition()
+    },
     validate () {
       const that = this
       that.showLoader = true
-      setTimeout(() => {
-        this.$router.push({ path: '/validation' })
-      }, 3000)
+      const blobPhoto = that.createBlob(that.photo)
+      const params = {
+        Body: blobPhoto.blob,
+        Bucket: 'custom-labels-console-eu-west-1-5df4f97068',
+        Key: 'images/recognisethisimage.jpg'
+      }
+      that.s3.putObject(params, function (err, data) {
+        if (err) {
+          console.log(err, err.stack)
+          that.$router.push({ path: '/validation' })
+        } else {
+          that.reko.detectCustomLabels({
+            Image: {
+              Bytes: blobPhoto.unit,
+              S3Object: {
+                Bucket: 'custom-labels-console-eu-west-1-5df4f97068',
+                Name: 'images/recognisethisimage.jpg'
+              }
+            },
+            ProjectVersionArn: 'arn:aws:rekognition:eu-west-1:757433453863:project/Scan4MeFinal/version/Scan4MeFinal.2022-04-05T12.15.19/1649153720960'
+          }, function (err, data) {
+            if (err) {
+              console.log('go To Reko')
+              console.log(err)
+              that.$router.push({ path: '/validation' })
+            } else {
+              that.$router.push({ path: '/validation', query: { confidence: data.CustomLabels[0].Confidence } })
+            }
+          })
+        }
+      })
     },
     uploadFile () {
       const image = this.$refs['file-img'].files[0]
@@ -138,7 +187,6 @@ export default {
           alert("May the browser didn't support or there is some errors.")
         })
     },
-
     stopCameraStream () {
       const tracks = this.$refs.camera.srcObject.getTracks()
 
@@ -146,7 +194,6 @@ export default {
         track.stop()
       })
     },
-
     takePhoto () {
       const imageObj = this.$refs.camera
       this.drawImage(imageObj)
@@ -158,13 +205,37 @@ export default {
       context.canvas.width = cameraBoxElem.width
       context.canvas.height = cameraBoxElem.height
       context.drawImage(image, 0, 0, cameraBoxElem.width, cameraBoxElem.height)
-      this.photo = image
+      this.photo = context.canvas.toDataURL()
     },
     downloadImage () {
       const download = document.getElementById('downloadPhoto')
       const canvas = document.getElementById('photoTaken').toDataURL('image/jpeg')
         .replace('image/jpeg', 'image/octet-stream')
       download.setAttribute('href', canvas)
+    },
+    createBlob (dataURL) {
+      const BASE64_MARKER = ';base64,'
+      if (dataURL.indexOf(BASE64_MARKER) === -1) {
+        const parts = dataURL.split(',')
+        const contentType = parts[0].split(':')[1]
+        const raw = decodeURIComponent(parts[1])
+        return new Blob([raw], { type: contentType })
+      }
+      const parts = dataURL.split(BASE64_MARKER)
+      const contentType = parts[0].split(':')[1]
+      const raw = window.atob(parts[1])
+      const rawLength = raw.length
+
+      const uInt8Array = new Uint8Array(rawLength)
+
+      for (let i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i)
+      }
+
+      return {
+        unit: uInt8Array,
+        blob: new Blob([uInt8Array], { type: contentType })
+      }
     }
   }
 }

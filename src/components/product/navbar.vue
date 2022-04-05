@@ -8,11 +8,13 @@
       <img src="../../assets/images/search.svg">
       <p>Recherche</p>
     </div>
-    <router-link to="/product" id="main-item">
-      <div class="red">
+
+    <div id="main-item" @click="goProduct">
+      <div class="red" >
         <img src="../../assets/images/m-icon.svg" class="logo-moulinex">
       </div>
     </router-link>
+    
     <div class="navbar-item">
       <img src="../../assets/images/panier.svg">
       <p>Mon panier</p>
@@ -26,7 +28,11 @@
 
 <script>
 export default {
-
+  methods: {
+    goProduct () {
+      this.$router.push({ path: '/product' })
+    }
+  }
 }
 </script>
 
@@ -44,6 +50,7 @@ export default {
     align-items: center;
     z-index: 1;
     #main-item {
+      cursor: pointer;
       transform: translateY(-35%);
       height: 7vh;
       width: 7vh;

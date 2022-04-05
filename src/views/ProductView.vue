@@ -6,9 +6,11 @@
     <div class="chat">
       <img src="../assets/images/chat.svg">
     </div>
-    <router-link to="/" class="add-product">
+
+    <div class="add-product" @click="goHome">
       <img src="../assets/images/plus.svg">
     </router-link>
+    
     <navbar></navbar>
     <cardObject></cardObject>
     <div class="banner">
@@ -31,6 +33,11 @@ export default {
   name: 'product',
   components: {
     navbar, cardObject, cardsAction, firstTry
+  },
+  methods: {
+    goHome () {
+      this.$router.push({ path: '/' })
+    }
   }
 }
 </script>
@@ -66,6 +73,7 @@ export default {
       }
     }
     .add-product {
+      cursor: pointer;
       position: absolute;
       top: 5.3vh;
       right: 5vw;
