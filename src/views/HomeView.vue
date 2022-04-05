@@ -8,7 +8,12 @@
                             style="width: 100%; height: 100%;"
                             loop controls autoplay>
         </lottie-vue-player>
-        <main v-if="!showPlayer" class="camera-container">
+        <lottie-vue-player
+         v-if="showLoader"
+        src="https://assets9.lottiefiles.com/private_files/lf30_xxistptg.json"
+        background="transparent" speed="1"  style="width: 100%; height: 80%;" loop controls autoplay>
+        </lottie-vue-player>
+        <main v-if="!showPlayer && !showLoader" class="camera-container">
             <div v-if="isCameraOpen && isLoading" class="camera-loading">
                 <ul class="loader-circle">
                 <li></li>
@@ -26,14 +31,12 @@
                 <canvas v-show="isPhotoTaken" id="photoTaken" ref="canvas"></canvas>
             </div>
 
-            <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
-                <router-link to="/validation" >
+            <div v-if="isPhotoTaken && isCameraOpen" class="camera-download" @click="validate">
                     <span>Valider</span>
                     <font-awesome-icon icon="fa-solid fa-arrow-right-long" />
-                </router-link>
             </div>
         </main>
-        <footer v-if="!showPlayer" class="camera-button">
+        <footer v-if="!showPlayer  && !showLoader" class="camera-button">
                 <font-awesome-icon @click="takePhoto()" v-if="!isPhotoTaken" icon="fa-solid fa-camera" size="2xl" />
                 <font-awesome-icon @click="isPhotoTaken = false"  v-else icon="fa-solid fa-camera-rotate" size="2xl"/>
             <span class="input-file">
@@ -55,7 +58,8 @@ export default {
       isLoading: false,
       link: '#',
       photo: null,
-      showPlayer: true
+      showPlayer: true,
+      showLoader: false
     }
   },
   mounted () {
@@ -79,6 +83,13 @@ export default {
     }, 1500)
   },
   methods: {
+    validate () {
+      const that = this
+      that.showLoader = true
+      setTimeout(() => {
+        this.$router.push({ path: '/validation' })
+      }, 3000)
+    },
     uploadFile () {
       const image = this.$refs['file-img'].files[0]
       const reader = new FileReader()
@@ -170,6 +181,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 100VH;
   width: 100VW;
     .camera-container::before{
@@ -207,13 +219,11 @@ export default {
             text-align: center;
             color: #FFFEFE;
              position: absolute;
-
+              justify-content: space-around;
             a{
               width:100%;
               text-decoration: none;
               color: unset;
-              display: flex;
-              justify-content: space-around;
             }
 
         }
