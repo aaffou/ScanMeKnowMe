@@ -116,8 +116,8 @@ export default {
       that.s3.putObject(params, function (err, data) {
         if (err) {
           console.log(err, err.stack)
+          that.$router.push({ path: '/validation' })
         } else {
-          console.log(blobPhoto)
           that.reko.detectCustomLabels({
             Image: {
               Bytes: blobPhoto.unit,
@@ -131,19 +131,13 @@ export default {
             if (err) {
               console.log('go To Reko')
               console.log(err)
+              that.$router.push({ path: '/validation' })
             } else {
-              setTimeout(() => {
-                that.$router.push({ path: '/validation' })
-              }, 3000)
-              that.resultAWS = JSON.stringify(data)
+              that.$router.push({ path: '/validation', query: { confidence: data.CustomLabels[0].Confidence } })
             }
           })
         }
       })
-
-      // setTimeout(() => {
-      //   that.$router.push({ path: '/validation' })
-      // }, 3000)
     },
     uploadFile () {
       const image = this.$refs['file-img'].files[0]
