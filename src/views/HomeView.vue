@@ -1,7 +1,8 @@
 <template>
     <section id="app" class="web-camera-container">
+
         <main class="camera-container">
-            <div v-show="isCameraOpen && isLoading" class="camera-loading">
+            <div v-if="isCameraOpen && isLoading" class="camera-loading">
                 <ul class="loader-circle">
                 <li></li>
                 <li></li>
@@ -11,7 +12,7 @@
 
             <div v-if="isCameraOpen" v-show="!isLoading" class="camera-box" :class="{ 'flash' : isShotPhoto }">
 
-                <div class="camera-shutter" :class="{'flash' : isShotPhoto}"></div>
+                <!-- <div class="camera-shutter" :class="{'flash' : isShotPhoto}"></div> -->
 
                 <video v-show="!isPhotoTaken" ref="camera" autoplay></video>
 
@@ -30,7 +31,7 @@
                 <label for="file-img">
                         <font-awesome-icon icon="fa-solid fa-image" size="2xl"/>
                 </label>
-                <input type="file" id="file-img" name="file-img" accept="image/*">
+                <input type="file" id="file-img" name="file-img" ref="file-img" accept="image/*" @change="uploadFile" >
             </span>
         </footer>
     </section>
@@ -48,10 +49,35 @@ export default {
     }
   },
   mounted () {
-    this.isCameraOpen = true
-    this.createCameraElement()
+    const that = this
+    let deviceId = null
+    navigator.mediaDevices.enumerateDevices()
+      .then(function (devices) {
+        devices.forEach(function (device) {
+          if (device.kind.includes('video') && device.label.includes('back') && device.label.includes('2 0')) {
+            deviceId = device.deviceId
+          }
+        })
+        that.isCameraOpen = true
+        that.createCameraElement(deviceId)
+      })
+      .catch(function (err) {
+        console.log(err.name + ': ' + err.message)
+      })
   },
   methods: {
+    uploadFile () {
+      const image = this.$refs['file-img'].files[0]
+      const reader = new FileReader()
+      const that = this
+      reader.onload = function (event) {
+        const imageSource = event.target.result
+        const img = new Image()
+        img.src = imageSource
+        that.drawImage(img)
+      }
+      reader.readAsDataURL(image)
+    },
     closeCamera () {
       this.isCameraOpen = false
       this.isPhotoTaken = false
@@ -62,13 +88,20 @@ export default {
       this.isCameraOpen = true
       this.createCameraElement()
     },
-    createCameraElement () {
+    createCameraElement (deviceId) {
       this.isLoading = true
-
-      const constraints = (window.constraints = {
+      let constraints = (window.constraints = {
         audio: false,
-        video: true
+        video: {
+          facingMode: 'environment'
+        }
       })
+      if (deviceId) {
+        constraints = (window.constraints = {
+          audio: false,
+          video: { deviceId: deviceId }
+        })
+      }
 
       navigator.mediaDevices
         .getUserMedia(constraints)
@@ -91,27 +124,18 @@ export default {
     },
 
     takePhoto () {
-      if (!this.isPhotoTaken) {
-        this.isShotPhoto = true
-
-        const FLASH_TIMEOUT = 50
-
-        setTimeout(() => {
-          this.isShotPhoto = false
-        }, FLASH_TIMEOUT)
-      }
-
-      this.isPhotoTaken = !this.isPhotoTaken
-
-      const context = this.$refs.canvas.getContext('2d')
       const imageObj = this.$refs.camera
+      this.drawImage(imageObj)
+    },
+    drawImage (image) {
+      this.isPhotoTaken = !this.isPhotoTaken
+      const context = this.$refs.canvas.getContext('2d')
       const cameraBoxElem = document.querySelector('.camera-box video').getBoundingClientRect()
       context.canvas.width = cameraBoxElem.width
       context.canvas.height = cameraBoxElem.height
-      context.drawImage(imageObj, 0, 0, cameraBoxElem.width, cameraBoxElem.height)
-      this.photo = imageObj
+      context.drawImage(image, 0, 0, cameraBoxElem.width, cameraBoxElem.height)
+      this.photo = image
     },
-
     downloadImage () {
       const download = document.getElementById('downloadPhoto')
       const canvas = document.getElementById('photoTaken').toDataURL('image/jpeg')
@@ -167,6 +191,7 @@ export default {
         display: flex;
         justify-content: space-around;
         width: 100%;
+        height:44px;
     }
     .camera-button > span {
         cursor: pointer;
@@ -174,10 +199,10 @@ export default {
   .camera-box {
       display: flex;
       width:100%;
+      height: 100%;
       video{
         width: 100vw;
-        height: calc( 100vh - 44px);
-        position: fixed;
+        height: 100%;
         object-fit: cover;
       }
     .camera-shutter {
