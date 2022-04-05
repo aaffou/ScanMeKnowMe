@@ -1,7 +1,15 @@
 <template>
     <section id="app" class="web-camera-container">
-        <main class="camera-container">
-            <div v-show="isCameraOpen && isLoading" class="camera-loading">
+      <lottie-vue-player
+        v-if="showPlayer"
+      :src="`https://assets4.lottiefiles.com/private_files/lf30_efsl46fs.json`"
+                           background="transparent"
+                            speed="1"
+                            style="width: 100%; height: 100%;"
+                            loop controls autoplay>
+        </lottie-vue-player>
+        <main v-if="!showPlayer" class="camera-container">
+            <div v-if="isCameraOpen && isLoading" class="camera-loading">
                 <ul class="loader-circle">
                 <li></li>
                 <li></li>
@@ -11,7 +19,7 @@
 
             <div v-if="isCameraOpen" v-show="!isLoading" class="camera-box" :class="{ 'flash' : isShotPhoto }">
 
-                <div class="camera-shutter" :class="{'flash' : isShotPhoto}"></div>
+                <!-- <div class="camera-shutter" :class="{'flash' : isShotPhoto}"></div> -->
 
                 <video v-show="!isPhotoTaken" ref="camera" autoplay></video>
 
@@ -19,18 +27,20 @@
             </div>
 
             <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
-                <span>Valider</span>
-                <font-awesome-icon icon="fa-solid fa-arrow-right-long" />
+                <router-link to="/validation" >
+                    <span>Valider</span>
+                    <font-awesome-icon icon="fa-solid fa-arrow-right-long" />
+                </router-link>
             </div>
         </main>
-        <footer class="camera-button">
+        <footer v-if="!showPlayer" class="camera-button">
                 <font-awesome-icon @click="takePhoto()" v-if="!isPhotoTaken" icon="fa-solid fa-camera" size="2xl" />
                 <font-awesome-icon @click="isPhotoTaken = false"  v-else icon="fa-solid fa-camera-rotate" size="2xl"/>
             <span class="input-file">
                 <label for="file-img">
                         <font-awesome-icon icon="fa-solid fa-image" size="2xl"/>
                 </label>
-                <input type="file" id="file-img" name="file-img" accept="image/*">
+                <input type="file" id="file-img" name="file-img" ref="file-img" accept="image/*" @change="uploadFile" >
             </span>
         </footer>
     </section>
@@ -44,14 +54,43 @@ export default {
       isShotPhoto: false,
       isLoading: false,
       link: '#',
-      photo: null
+      photo: null,
+      showPlayer: true
     }
   },
   mounted () {
-    this.isCameraOpen = true
-    this.createCameraElement()
+    const that = this
+    let deviceId = null
+    setTimeout(() => {
+      that.showPlayer = false
+      navigator.mediaDevices.enumerateDevices()
+        .then(function (devices) {
+          devices.forEach(function (device) {
+            if (device.kind.includes('video') && device.label.includes('back') && device.label.includes('2 0')) {
+              deviceId = device.deviceId
+            }
+          })
+          that.isCameraOpen = true
+          that.createCameraElement(deviceId)
+        })
+        .catch(function (err) {
+          console.log(err.name + ': ' + err.message)
+        })
+    }, 1500)
   },
   methods: {
+    uploadFile () {
+      const image = this.$refs['file-img'].files[0]
+      const reader = new FileReader()
+      const that = this
+      reader.onload = function (event) {
+        const imageSource = event.target.result
+        const img = new Image()
+        img.src = imageSource
+        that.drawImage(img)
+      }
+      reader.readAsDataURL(image)
+    },
     closeCamera () {
       this.isCameraOpen = false
       this.isPhotoTaken = false
@@ -62,13 +101,20 @@ export default {
       this.isCameraOpen = true
       this.createCameraElement()
     },
-    createCameraElement () {
+    createCameraElement (deviceId) {
       this.isLoading = true
-
-      const constraints = (window.constraints = {
+      let constraints = (window.constraints = {
         audio: false,
-        video: true
+        video: {
+          facingMode: 'environment'
+        }
       })
+      if (deviceId) {
+        constraints = (window.constraints = {
+          audio: false,
+          video: { deviceId: deviceId }
+        })
+      }
 
       navigator.mediaDevices
         .getUserMedia(constraints)
@@ -91,27 +137,18 @@ export default {
     },
 
     takePhoto () {
-      if (!this.isPhotoTaken) {
-        this.isShotPhoto = true
-
-        const FLASH_TIMEOUT = 50
-
-        setTimeout(() => {
-          this.isShotPhoto = false
-        }, FLASH_TIMEOUT)
-      }
-
-      this.isPhotoTaken = !this.isPhotoTaken
-
-      const context = this.$refs.canvas.getContext('2d')
       const imageObj = this.$refs.camera
+      this.drawImage(imageObj)
+    },
+    drawImage (image) {
+      this.isPhotoTaken = !this.isPhotoTaken
+      const context = this.$refs.canvas.getContext('2d')
       const cameraBoxElem = document.querySelector('.camera-box video').getBoundingClientRect()
       context.canvas.width = cameraBoxElem.width
       context.canvas.height = cameraBoxElem.height
-      context.drawImage(imageObj, 0, 0, cameraBoxElem.width, cameraBoxElem.height)
-      this.photo = imageObj
+      context.drawImage(image, 0, 0, cameraBoxElem.width, cameraBoxElem.height)
+      this.photo = image
     },
-
     downloadImage () {
       const download = document.getElementById('downloadPhoto')
       const canvas = document.getElementById('photoTaken').toDataURL('image/jpeg')
@@ -128,19 +165,29 @@ export default {
 #file-img{
     display: none;
 }
+
 .web-camera-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100VH;
   width: 100VW;
+    .camera-container::before{
+      position: absolute;
+      content: "";
+      width: 100%;
+      background-color: grey;
+      height: 100%;
+      opacity: 0.3;
+       background: radial-gradient(circle at center, transparent 75%, grey 25.5%);
+      background-size: 100% 100%;
+      background-position: 50% 50%;
+    }
     .camera-container{
         height: calc(100% - 44px);
+        position:relative;
 
         .camera-download{
-            display: flex;
-            justify-content: space-around;
-           position: absolute;
             top: 90%;
             left: calc(50% - 60px);
             width: 60;
@@ -159,6 +206,16 @@ export default {
             align-items: center;
             text-align: center;
             color: #FFFEFE;
+             position: absolute;
+
+            a{
+              width:100%;
+              text-decoration: none;
+              color: unset;
+              display: flex;
+              justify-content: space-around;
+            }
+
         }
     }
     .camera-button {
@@ -166,7 +223,9 @@ export default {
         color: #EC676D;
         display: flex;
         justify-content: space-around;
+        align-items: center;
         width: 100%;
+        height:44px;
     }
     .camera-button > span {
         cursor: pointer;
@@ -174,10 +233,10 @@ export default {
   .camera-box {
       display: flex;
       width:100%;
+      height: 100%;
       video{
         width: 100vw;
-        height: calc( 100vh - 44px);
-        position: fixed;
+        height: 100%;
         object-fit: cover;
       }
     .camera-shutter {
