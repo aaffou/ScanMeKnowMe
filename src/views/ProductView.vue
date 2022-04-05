@@ -3,6 +3,9 @@
     <div class="moulinex">
       <img src="../assets/images/moulinex.svg">
     </div>
+    <div class="chat">
+      <img src="../assets/images/chat.svg">
+    </div>
     <div class="add-product">
       <img src="../assets/images/plus.svg">
     </div>
@@ -40,6 +43,16 @@ export default {
     flex-direction: column;
     justify-content: flex-end;
     position: relative;
+    .chat {
+      position: absolute;
+      bottom: 6vh;
+      right: 0vw;
+      height: 12vh;
+      z-index: 2;
+      img {
+        height: 100%;
+      }
+    }
     .moulinex {
       position: absolute;
       top: 5vh;
@@ -69,7 +82,7 @@ export default {
       background-size: cover;
       display: flex;
       flex-direction: column;
-      gap: 3vh;
+      gap: 2vh;
       position: relative;
       .cache {
         height: 20vh;

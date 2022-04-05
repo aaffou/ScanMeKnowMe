@@ -3,7 +3,7 @@
       <img src="../../assets/images/cookeo.svg" class="img-obj">
       <div class="title-ref">
         <h3 class="title-obj">Cookeo Connect</h3>
-        <p class="ref">ref: CE700100</p>
+        <p class="ref">Ref: CE700100</p>
       </div>
     </div>
 </template>
@@ -39,7 +39,7 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 12px;
       transform: translateY(-90%);
       color: rgba(0, 0, 0, 0.74);
       .title-obj {

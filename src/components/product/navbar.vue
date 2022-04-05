@@ -15,11 +15,11 @@
     </div>
     <div class="navbar-item">
       <img src="../../assets/images/panier.svg">
-      <p>panier</p>
+      <p>Mon panier</p>
     </div>
     <div class="navbar-item">
       <img src="../../assets/images/profile.svg">
-      <p>Mon profile</p>
+      <p>Mon profil</p>
     </div>
   </div>
 </template>
