@@ -9,7 +9,7 @@
         </div>
 
       </div>
-      <h2>Votre Cookeo a été ajouté avec succès ! ({{confidence}}%)</h2>
+      <h2>Votre Cookeo a été ajouté avec succès ! {{confidence}}</h2>
       <p>Tirez le meilleur parti de votre appareil grace à l'application Scan4me</p>
       <router-link to="/product" class="btn-go">C'est parti !</router-link>
     </div>
@@ -26,7 +26,9 @@ export default {
     }
   },
   beforeMount () {
-    this.confidence = Math.ceil(this.$route.query.confidence)
+    if (this.$route.query.confidence) {
+      this.confidence = '(' + Math.ceil(this.$route.query.confidence) + '%)'
+    }
   }
 }
 </script>
