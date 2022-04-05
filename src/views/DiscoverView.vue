@@ -1,5 +1,8 @@
 <template>
   <main>
+    <topbar :topbar="{ title: 'Je découvre mon Cookeo',
+                       route: 'product' }">
+    </topbar>
     <navbar></navbar>
     <div class="container">
       <div class="flash-notice">
@@ -58,10 +61,11 @@
 <script>
 
 import navbar from '../components/product/navbar.vue'
+import topbar from '../components/topbar.vue'
 export default {
   name: 'discover',
   components: {
-    navbar
+    navbar, topbar
   }
 }
 </script>
@@ -96,6 +100,7 @@ export default {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
+      padding-bottom: 10vh;
       .card-video {
         border-radius: 12px;
         display: flex;
