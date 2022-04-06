@@ -23,7 +23,7 @@
     <div class="cards-repair">
 
       <div class="card-repair">
-        <img src="../assets/images/visse.svg" class="img-repair">
+        <img src="../assets/images/water-tank.svg" class="img-repair">
         <div class="description">
           <h3 class="title">Récupérateur de Condensation</h3>
           <p class="ref">ref: SS-993440</p>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="card-repair">
-        <img src="../assets/images/visse.svg" class="img-repair">
+        <img src="../assets/images/truc.svg" class="img-repair">
         <div class="description">
           <h3 class="title">Soupage blanche <br> et violette</h3>
           <p class="ref">ref: SS-993429</p>

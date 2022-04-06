@@ -6,7 +6,7 @@
     <navbar></navbar>
     <div class="container">
       <div class="cards-repair">
-        <card-repair :repair="{ img: 'visse.svg',
+        <card-repair :repair="{ img: 'water-tank.svg',
                                 title: 'Récupérateur de Condensation',
                                 ref: 'ref: SS-993440',
                                 price: '0,90€'
@@ -18,13 +18,13 @@
                                 price: '0,90€'
                               }">
         </card-repair>
-        <card-repair :repair="{ img: 'visse.svg',
+        <card-repair :repair="{ img: 'machin.svg',
                                 title: 'Soupage <br> blanche',
                                 ref: 'ref: SS-993429',
                                 price: '0,90€'
                               }">
         </card-repair>
-        <card-repair :repair="{ img: 'visse.svg',
+        <card-repair :repair="{ img: 'truc.svg',
                                 title: 'Soupage blanche <br> et violette',
                                 ref: 'ref: SS-993429',
                                 price: '0,90€'

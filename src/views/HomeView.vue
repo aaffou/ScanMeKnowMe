@@ -133,7 +133,6 @@ export default {
               console.log(err)
               that.$router.push({ path: '/validation' })
             } else {
-              console.log(data)
               const path = { path: '/validation' }
               if (data.CustomLabels.length > 0) {
                 path.query = { confidence: data.CustomLabels[0].Confidence }
