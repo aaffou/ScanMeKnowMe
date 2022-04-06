@@ -126,7 +126,7 @@ export default {
                 Name: 'images/recognisethisimage.jpg'
               }
             },
-            ProjectVersionArn: 'arn:aws:rekognition:eu-west-1:757433453863:project/Scan4MeFinal/version/Scan4MeFinal.2022-04-05T12.15.19/1649153720960'
+            ProjectVersionArn: 'arn:aws:rekognition:eu-west-1:757433453863:project/Scan4MeDemo/version/Scan4MeDemo.2022-04-05T23.38.21/1649194700965'
           }, function (err, data) {
             if (err) {
               console.log('go To Reko')
