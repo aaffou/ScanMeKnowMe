@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/',
+  publicPath: '',
   transpileDependencies: true,
   devServer: {
     https: true
