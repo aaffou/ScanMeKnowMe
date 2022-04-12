@@ -6,57 +6,32 @@
     <navbar></navbar>
     <div class="container">
       <div class="cards-accessoire">
-
-        <div class="card-accessoire">
-          <font-awesome-icon icon="fa-regular fa-heart" class="fav" />
-          <img src="../assets/images/accessoire.svg" class="img-accessoire">
-          <h3 class="title-accessoire">Accessoire</h3>
-        </div>
-        <div class="card-accessoire">
-          <font-awesome-icon icon="fa-solid fa-heart" class="fav red" />
-          <img src="../assets/images/accessoire.svg" class="img-accessoire">
-          <h3 class="title-accessoire">Accessoire</h3>
-        </div>
-        <div class="card-accessoire">
-          <font-awesome-icon icon="fa-regular fa-heart" class="fav" />
-          <img src="../assets/images/accessoire.svg" class="img-accessoire">
-          <h3 class="title-accessoire">Accessoire</h3>
-        </div>
-        <div class="card-accessoire">
-          <font-awesome-icon icon="fa-regular fa-heart" class="fav" />
-          <img src="../assets/images/accessoire.svg" class="img-accessoire">
-          <h3 class="title-accessoire">Accessoire</h3>
-        </div>
-        <div class="card-accessoire">
-          <img src="../assets/images/accessoire.svg" class="img-accessoire">
-          <font-awesome-icon icon="fa-regular fa-heart" class="fav" />
-          <h3 class="title-accessoire">Accessoire</h3>
-        </div>
-        <div class="card-accessoire">
-          <font-awesome-icon icon="fa-solid fa-heart" class="fav red" />
-          <img src="../assets/images/accessoire.svg" class="img-accessoire">
-          <h3 class="title-accessoire">Accessoire</h3>
-        </div>
-        <div class="card-accessoire">
-          <font-awesome-icon icon="fa-solid fa-heart" class="fav red" />
-          <img src="../assets/images/accessoire.svg" class="img-accessoire">
-          <h3 class="title-accessoire">Accessoire</h3>
-        </div>
-        <div class="card-accessoire">
-          <font-awesome-icon icon="fa-regular fa-heart" class="fav" />
-          <img src="../assets/images/accessoire.svg" class="img-accessoire">
-          <h3 class="title-accessoire">Accessoire</h3>
-        </div>
-        <div class="card-accessoire">
-          <font-awesome-icon icon="fa-regular fa-heart" class="fav" />
-          <img src="../assets/images/accessoire.svg" class="img-accessoire">
-          <h3 class="title-accessoire">Accessoire</h3>
-        </div>
-        <div class="card-accessoire">
-          <font-awesome-icon icon="fa-regular fa-heart" class="fav" />
-          <img src="../assets/images/accessoire.svg" class="img-accessoire">
-          <h3 class="title-accessoire">Accessoire</h3>
-        </div>
+       <card-repair :repair="{ img: 'accessoires/moule.svg',
+                                title: 'Moule à gâteau',
+                                price: '24,90€'
+                              }">
+        </card-repair>
+         <card-repair :repair="{ img: 'accessoires/verrines.svg',
+                                title: 'Lot de 6 verrines',
+                                price: '32,95€'
+                              }">
+        </card-repair>   <card-repair :repair="{ img: 'accessoires/transport.svg',
+                                title: 'Sac de transport',
+                                price: '59,99€'
+                              }">
+        </card-repair>   <card-repair :repair="{ img: 'accessoires/balance.svg',
+                                title: 'Balance connectée',
+                                price: '24,90€'
+                              }">
+        </card-repair>   <card-repair :repair="{ img: 'accessoires/hideOne.svg',
+                                title: 'Assiette',
+                                price: '5,99€'
+                              }">
+        </card-repair>   <card-repair :repair="{ img: 'accessoires/hideTwo.svg',
+                                title: 'Epuisette',
+                                price: '15,90€'
+                              }">
+        </card-repair>
 
       </div>
     </div>
@@ -66,10 +41,12 @@
 <script>
 import navbar from '../components/product/navbar.vue'
 import topbar from '../components/topbar.vue'
+import cardRepair from '../components/card-repair.vue'
+
 export default {
   name: 'repair',
   components: {
-    navbar, topbar
+    navbar, topbar, cardRepair
   }
 }
 </script>
