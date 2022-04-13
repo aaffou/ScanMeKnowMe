@@ -3,5 +3,11 @@ module.exports = {
   transpileDependencies: true,
   devServer: {
     https: true
+  },
+  pwa: {
+    manifestOptions:{
+      name:'Scan4Me',
+      start_url:'/home'
+    }
   }
 }
